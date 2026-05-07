@@ -1,0 +1,23 @@
+{
+  "agent": "cos",
+  "hooks": {
+    "Stop": [
+      {
+        "matcher": "",
+        "command": "echo '[STOP] Agent stopped. Check .harness/reports/ for audit trail.'"
+      }
+    ]
+  },
+  "permissions": {
+    "allow": [
+      "Read",
+      "Write",
+      "Edit",
+      "Bash(ls:*)",
+      "Bash(find:*)",
+      "Bash(cat:*)",
+      "Bash(grep:*)",
+      "SendMessage"
+    ]
+  }
+}

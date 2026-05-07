@@ -1,0 +1,61 @@
+{
+  "name": "claude-harness-blueprint",
+  "version": "0.1.0",
+  "description": "Multi-agent harness blueprints for Claude Code — build Coordinator/Generator/Evaluator workflows in 15 minutes.",
+  "license": "MIT",
+  "templates": [
+    {
+      "id": "software-dev",
+      "path": "templates/software-dev",
+      "pattern": "Coordinator → Builder → QA",
+      "use_cases": ["app development", "library", "CLI", "feature delivery"]
+    },
+    {
+      "id": "knowledge-wiki",
+      "path": "templates/knowledge-wiki",
+      "pattern": "Coordinator → Compiler → QA",
+      "use_cases": ["personal wiki", "research notes", "knowledge base", "vault"]
+    },
+    {
+      "id": "operations",
+      "path": "templates/operations",
+      "pattern": "Coordinator → Executor → Monitor",
+      "use_cases": ["triage", "support", "data ops", "ongoing pipelines"]
+    },
+    {
+      "id": "orchestrator",
+      "path": "templates/orchestrator",
+      "pattern": "CoS → Advisor → Ops",
+      "use_cases": ["multi-project coordination", "portfolio management"]
+    },
+    {
+      "id": "automation-task",
+      "path": "templates/automation-task",
+      "pattern": "task-planner → task-executor → task-reviewer",
+      "use_cases": ["scheduled jobs", "cron + agent", "daily/weekly automation"]
+    },
+    {
+      "id": "meta-harness",
+      "path": "templates/meta-harness",
+      "pattern": "Planner → Builder → QA (for generating other harnesses)",
+      "use_cases": ["agent blueprint factories", "scaffold generators", "meta tooling"]
+    }
+  ],
+  "examples": [
+    "demo-taskflow-app",
+    "demo-research-wiki",
+    "demo-issue-triage",
+    "demo-multi-project",
+    "demo-weekly-report"
+  ],
+  "scripts": {
+    "init": "scripts/init-harness.sh",
+    "overlay": "scripts/overlay-existing.sh",
+    "upgrade": "scripts/upgrade-harness.sh",
+    "verify": "scripts/verify-harness.sh"
+  },
+  "compatibility": {
+    "claude_code_min_version": "1.0.0",
+    "model_recommendation": "opus[1m] for all agents"
+  }
+}

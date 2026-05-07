@@ -1,0 +1,37 @@
+# Orchestrator CLAUDE.md
+
+> 这是一个虚构的 3 项目 portfolio 示例。请替换为你的实际项目信息。
+
+## Portfolio
+
+本 Orchestrator 管理以下三个项目：
+
+| 项目 | 路径 | 技术栈 | 状态 |
+|------|------|--------|------|
+| ShopStream | `~/dev/shopstream` | Next.js + PostgreSQL | 活跃开发 |
+| DocForge | `~/dev/docforge` | Python + MkDocs | 维护模式 |
+| MetricsPipe | `~/dev/metricspipe` | Go + ClickHouse | 新启动 |
+
+## 项目间依赖
+
+- ShopStream 的订单事件 → MetricsPipe 的数据摄入管道
+- DocForge 为 ShopStream 和 MetricsPipe 生成 API 文档
+
+## 全局规则
+
+- 中文交互，技术术语保留英文
+- 涉及数据库 schema 变更必须走 C 档（完整 Harness）
+- 每次跨项目操作后更新 `.harness/portfolio.md`
+- ShopStream 是 P0 --- 资源冲突时优先保障
+
+## Harness 配置
+
+- ShopStream：已配置 software-dev harness（Coordinator → Builder → QA）
+- DocForge：已配置 knowledge-wiki harness（Coordinator → Compiler → QA）
+- MetricsPipe：无 harness，需要时 TeamCreate 临时创建
+
+## 本周焦点
+
+1. ShopStream：完成支付模块集成
+2. MetricsPipe：搭建 CI/CD 管道
+3. DocForge：更新 API 文档至 v2.1

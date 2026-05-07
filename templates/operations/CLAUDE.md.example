@@ -1,0 +1,65 @@
+# BugTracker Triage — 项目约束
+
+这是一个开源项目的 issue triage pipeline，自动分类、标注和路由 GitHub issue。
+
+## Pipeline 概述
+
+- 来源：GitHub Issues（通过 `gh` CLI 获取）
+- 处理频率：每天一次，或手动触发
+- 目标：减少维护者的 triage 负担，保证每个 issue 在 24 小时内被分类
+
+## Issue 分类标准
+
+### Bug Report
+- 识别特征：包含"bug"、"error"、"crash"、"broken"等关键词，或使用了 bug report 模板
+- 标签：`bug`
+- 优先级判定：
+  - Critical：影响核心功能、数据丢失
+  - High：影响常用功能、有 workaround
+  - Medium：边缘场景、UI 问题
+  - Low：文档错误、typo
+
+### Feature Request
+- 识别特征：包含"feature"、"request"、"would be nice"、"proposal"等关键词
+- 标签：`enhancement`
+- 优先级：统一为 Medium
+
+### Question
+- 识别特征：包含"how to"、"?"、"help"等关键词
+- 标签：`question`
+- 处理：引导到讨论区或文档
+
+### Duplicate
+- 识别特征：与已有 open issue 描述高度相似
+- 标签：`duplicate`
+- 处理：关联原始 issue 并关闭
+
+## 处理约束
+
+- **不自动关闭 issue**（除明确的 duplicate）
+- **不自动分配**（只打标签和优先级）
+- **不回复 issue**（避免以机器人身份发言）
+- Frontier signal：无法分类的 issue → 标记为 `needs-triage` 等待人工
+
+## 工具
+
+```bash
+# 获取最新未标记的 issue
+gh issue list --state open --label "" --limit 20
+
+# 读取 issue 详情
+gh issue view <number>
+
+# 添加标签
+gh issue edit <number> --add-label "bug,priority:high"
+
+# 搜索可能的 duplicate
+gh issue list --state open --search "<keywords>"
+```
+
+## Health 指标
+
+- 待处理 issue 数（目标：≤ 10）
+- 平均 triage 时间（目标：≤ 24h）
+- 误分类率（通过人工抽检衡量，目标：≤ 10%）
+- Frontier signal 比例（目标：≤ 20%）

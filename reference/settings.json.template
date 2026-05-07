@@ -1,0 +1,32 @@
+{
+  "_comment_agent": "默认入口 agent。所有用户请求先路由到此 agent。",
+  "agent": "coordinator",
+
+  "_comment_hooks": "Hooks 在 agent 生命周期事件时触发。",
+  "hooks": {
+    "_comment_stop": "Agent 停止时打印审计信息。matcher 为空匹配所有 agent。",
+    "Stop": [
+      {
+        "matcher": "",
+        "command": "echo '[STOP] Agent stopped. Check .harness/reports/ for audit trail.'"
+      }
+    ]
+  },
+
+  "_comment_permissions": "允许 agent 使用的工具和命令。根据项目需要调整。",
+  "permissions": {
+    "allow": [
+      "Read",
+      "Write",
+      "Edit",
+      "Bash(ls:*)",
+      "Bash(find:*)",
+      "Bash(cat:*)",
+      "Bash(grep:*)",
+      "Bash(rg:*)",
+      "Bash(git:*)",
+      "Bash(npm:*)",
+      "SendMessage"
+    ]
+  }
+}

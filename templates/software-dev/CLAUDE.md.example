@@ -1,0 +1,78 @@
+# TaskFlow — 项目约束
+
+TaskFlow 是一个任务管理应用，基于 Next.js 14 + TypeScript + Prisma + PostgreSQL。
+
+## 技术栈
+
+- **框架**：Next.js 14 (App Router)
+- **语言**：TypeScript (strict mode)
+- **数据库**：PostgreSQL + Prisma ORM
+- **样式**：Tailwind CSS
+- **测试**：Vitest + Playwright
+- **包管理**：pnpm
+
+## 代码规范
+
+- 使用 ESLint + Prettier，运行 `pnpm lint` 检查
+- 组件文件使用 PascalCase：`TaskCard.tsx`
+- 工具函数使用 camelCase：`formatDate.ts`
+- API 路由在 `app/api/` 下，遵循 RESTful 命名
+- 数据库操作统一通过 `lib/db.ts` 导出的 prisma 实例
+
+## 构建与测试
+
+```bash
+pnpm install          # 安装依赖
+pnpm dev              # 开发服务器 (localhost:3000)
+pnpm build            # 生产构建
+pnpm test             # 运行 Vitest 单元测试
+pnpm test:e2e         # 运行 Playwright E2E 测试
+pnpm lint             # Lint 检查
+pnpm typecheck        # TypeScript 类型检查 (tsc --noEmit)
+```
+
+## 目录结构
+
+```
+app/
+├── (auth)/           # 认证相关页面
+├── (dashboard)/      # 主面板
+│   ├── tasks/        # 任务列表 + 详情
+│   └── projects/     # 项目管理
+├── api/              # API 路由
+└── layout.tsx        # 根布局
+
+components/
+├── ui/               # 基础 UI 组件
+├── tasks/            # 任务相关组件
+└── projects/         # 项目相关组件
+
+lib/
+├── db.ts             # Prisma 客户端
+├── auth.ts           # 认证逻辑
+└── utils/            # 工具函数
+
+prisma/
+├── schema.prisma     # 数据库 Schema
+└── migrations/       # 迁移文件
+```
+
+## Gotchas
+
+- Prisma 的 `DateTime` 字段在 JSON 序列化后变成 string，前端需要 `new Date()` 转换
+- Next.js App Router 的 Server Component 默认不能使用 `useState`/`useEffect`，需要客户端交互的组件加 `"use client"`
+- `tasks` 表的 `status` 字段是 enum，修改 enum 值需要新建 migration
+- Playwright 测试需要先启动 dev server，CI 中用 `webServer` 配置自动启动
+- 环境变量 `DATABASE_URL` 必须设置，否则 Prisma 会在 import 时崩溃
+
+## 不可修改的模块
+
+- `lib/auth.ts` --- 认证逻辑已稳定，修改需要同步更新所有中间件
+- `prisma/migrations/` --- 已执行的 migration 不可修改，只能新增
+
+## 部署
+
+- CI：GitHub Actions（`.github/workflows/ci.yml`）
+- 部署平台：Vercel
+- Preview：每个 PR 自动生成 preview URL
+- Production：`main` 分支合并后自动部署

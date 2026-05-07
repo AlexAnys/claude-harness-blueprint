@@ -1,0 +1,77 @@
+name: Validate Templates
+
+on:
+  push:
+    paths:
+      - 'templates/**'
+  pull_request:
+    paths:
+      - 'templates/**'
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check template structure
+        run: |
+          errors=0
+
+          for template_dir in templates/*/; do
+            template=$(basename "$template_dir")
+            echo "--- Checking $template ---"
+
+            # Check settings.json exists
+            if [ ! -f "$template_dir/.claude/settings.json" ]; then
+              echo "ERROR: $template missing .claude/settings.json"
+              errors=$((errors + 1))
+            else
+              # Check "agent" field exists
+              if ! grep -q '"agent"' "$template_dir/.claude/settings.json"; then
+                echo "ERROR: $template settings.json missing 'agent' field"
+                errors=$((errors + 1))
+              fi
+            fi
+
+            # Check at least 2 agent definitions
+            agent_count=$(find "$template_dir/.claude/agents/" -name "*.md" 2>/dev/null | wc -l)
+            if [ "$agent_count" -lt 2 ]; then
+              echo "ERROR: $template has only $agent_count agent definitions (need >= 2)"
+              errors=$((errors + 1))
+            fi
+
+            # Check all agents have model field
+            for agent_file in "$template_dir"/.claude/agents/*.md; do
+              if [ -f "$agent_file" ]; then
+                if ! grep -q 'model:' "$agent_file"; then
+                  echo "ERROR: $(basename $agent_file) in $template missing model field"
+                  errors=$((errors + 1))
+                fi
+              fi
+            done
+
+            # Check QA/monitor/evaluator agents don't have Edit
+            for qa_file in "$template_dir"/.claude/agents/qa.md "$template_dir"/.claude/agents/monitor.md; do
+              if [ -f "$qa_file" ]; then
+                if grep -qi 'Edit' "$qa_file" | head -5 | grep -qi 'tools.*Edit\|allowed-tools.*Edit'; then
+                  echo "WARNING: $(basename $qa_file) in $template may have Edit in tools"
+                fi
+              fi
+            done
+
+            # Check README exists
+            if [ ! -f "$template_dir/README.md" ]; then
+              echo "ERROR: $template missing README.md"
+              errors=$((errors + 1))
+            fi
+
+            echo ""
+          done
+
+          if [ $errors -gt 0 ]; then
+            echo "FAILED: $errors errors found"
+            exit 1
+          else
+            echo "PASSED: All templates valid"
+          fi

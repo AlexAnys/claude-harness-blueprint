@@ -1,0 +1,3 @@
+# 格式说明：TSV（tab 分隔），每行一个任务
+# 状态值：TODO | IN_PROGRESS | DONE | BLOCKED | FAILED
+# timestamp	task_id	status	assignee	description	notes
