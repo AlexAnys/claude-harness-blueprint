@@ -1,9 +1,0 @@
-{
-  "agent": "coordinator",
-  "hooks": {
-    "agent-type": {
-      "description": "Stop hook: 确保 agent 在其角色边界内运行",
-      "enabled": true
-    }
-  }
-}

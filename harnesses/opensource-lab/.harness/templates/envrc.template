@@ -1,0 +1,35 @@
+# .envrc template for projects/<name>/<repo>/
+#
+# Place a copy (renamed to .envrc) inside the cloned repo. Requires direnv installed
+# (`brew install direnv` + add `eval "$(direnv hook zsh)"` to ~/.zshrc). When you `cd`
+# into the project, direnv auto-loads this; when you leave, it unloads.
+#
+# Never put secrets here — use bws. This file is for non-secret, per-project env.
+
+# --- Project identity ---
+export LAB_PROJECT="<name>"
+export LAB_PROJECT_ROOT="$(pwd)"
+
+# --- Per-project state isolation (when upstream tool honors an override) ---
+# Examples:
+# export GBRAIN_HOME="$LAB_PROJECT_ROOT/../state"
+# export HERMES_HOME="$LAB_PROJECT_ROOT/../state"
+# Inspect the tool's docs/env for the actual override variable.
+
+# --- Per-project PATH additions ---
+# If the project installs a local binary, prepend here rather than polluting system PATH.
+# PATH_add "$LAB_PROJECT_ROOT/node_modules/.bin"
+
+# --- Per-project secrets via bws (inject at call time) ---
+# Usage: in setup scripts or scripts/*, prefer:
+#   bws run --project-id "$LAB_BWS_PROJECT_ID" -- <cmd>
+# export LAB_BWS_PROJECT_ID="<bws-project-uuid>"
+
+# --- Port ---
+# export LAB_PORT="8081"   # must match .harness/ports.tsv
+
+# --- Tool versions ---
+# If .tool-versions is present and mise/asdf is installed, they'll activate automatically.
+# Nothing to do here.
+
+# Once configured, run `direnv allow` from the project dir to trust this file.

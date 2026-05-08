@@ -1,8 +1,5 @@
-node_modules/
 .DS_Store
+node_modules/
+.gstack/
 *.swp
-*.swo
-*~
 .env
-.env.local
-.env.*.local

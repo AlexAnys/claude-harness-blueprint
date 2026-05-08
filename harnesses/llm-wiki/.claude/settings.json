@@ -1,0 +1,26 @@
+{
+  "agent": "coordinator",
+  "hooks": {
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "agent",
+            "prompt": "你是 wiki QA 快速检查者。执行以下 6 项验证（不修改任何文件）：\n\n1. **Index 计数一致性**：读 wiki/index.md 概要区的数字，用 Glob 统计 wiki/sources/*.md、wiki/concepts/*.md、wiki/entities/*.md、wiki/synthesis/*.md 的实际文件数，比较是否一致\n2. **新文件是否在 index 中**：用 Glob 列出所有 wiki 页面文件名，检查 index.md 中是否都有对应条目（至少在表格中出现）\n3. **Frontmatter 最小字段**：抽查 5 个最近修改的 source 页面，确认有 source_files（YAML 数组）、compiled、type 字段\n4. **source_files 可解析**：抽查 3 个 source 页面的 source_files 字段，确认每个路径对应的 raw 文件存在\n5. **Git dirty state**：运行 git status，如果有未提交的 wiki/ 变更，报告提醒\n6. **Log 最后一条**：检查 log.md 最后一条的日期\n\n输出 JSON：{\"ok\": true/false, \"checks\": 6, \"passed\": N, \"issues\": [...]}。$ARGUMENTS",
+            "timeout": 60
+          }
+        ]
+      }
+    ],
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "echo '---' && echo 'Wiki Status:' && echo \"  Sources: $(ls wiki/sources/*.md 2>/dev/null | wc -l | tr -d ' ')\" && echo \"  Concepts: $(ls wiki/concepts/*.md 2>/dev/null | wc -l | tr -d ' ')\" && echo \"  Entities: $(ls wiki/entities/*.md 2>/dev/null | wc -l | tr -d ' ')\" && echo \"  Synthesis: $(ls wiki/synthesis/*.md 2>/dev/null | wc -l | tr -d ' ')\" && COMPILED=$(grep -rh '^  - raw/' wiki/sources/*.md 2>/dev/null | sed 's/^  - //' | sed 's/ *#.*//' | sort -u) && ALL_RAW=$(find raw -name '*.md' -not -path 'raw/assets/*' -not -path 'raw/resume-arsenal/*' 2>/dev/null | sort -u) && UNCOMPILED=$(comm -23 <(echo \"$ALL_RAW\") <(echo \"$COMPILED\") | wc -l | tr -d ' ') && echo \"  Uncompiled raw: $UNCOMPILED\" && echo \"  Last log: $(grep '^## \\[' log.md 2>/dev/null | tail -1 | sed 's/## //')\" && echo '---'"
+          }
+        ]
+      }
+    ]
+  }
+}

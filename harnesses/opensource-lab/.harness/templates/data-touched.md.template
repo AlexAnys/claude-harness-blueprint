@@ -1,0 +1,42 @@
+# <Project> — Data Touched
+
+_Template: copy to `projects/<name>/data-touched.md`. Mandatory — "nothing" is an explicit entry, not an omitted file._
+
+## Personal data / secrets / external services this project reaches
+
+| Data / Service | Access | Sensitivity | Destination | bws secret name | Notes |
+|---|---|---|---|---|---|
+| `<your-vault-path>` | read | high | local only | — | symlinked at install time |
+| OpenAI API | transmit | low (embeddings of public notes) | openai.com | `OPENAI_API_KEY` in `<your-bws-project>` | pay-per-call |
+| Anthropic API | transmit | low | anthropic.com | `ANTHROPIC_API_KEY` in `<your-bws-project>` | optional |
+
+## Sensitivity scale
+
+- **Low**: public or derived data (e.g. embeddings of public blog posts)
+- **Medium**: personal but non-financial (tasks, calendar topics)
+- **High**: PII, financial, relationships, health, credentials
+- **Critical**: source-of-truth files (vault, keys, contracts) — never lose
+
+## Reversibility
+
+What happens to this data if we uninstall?
+
+- Local files: unchanged (we only read)
+- Vendor-side: request deletion at <portal-url>, ~<N> days retention
+- Local DB / index: deleted with `rm -rf ~/.<name>/`
+
+## Blast-radius assessment
+
+If this project was compromised (malicious package update, supply chain), what could an attacker exfiltrate?
+
+- The `<your-vault-path>` vault (if read access)
+- Contents of OpenAI calls (prompts + embeddings output)
+- Anything else in the bws project (if the bws token were stolen — but scoped)
+
+## Re-check trigger
+
+Revisit this file whenever:
+- The project adds a new integration
+- bws secrets scope changes
+- Upstream adds telemetry / analytics
+- Yearly, minimum

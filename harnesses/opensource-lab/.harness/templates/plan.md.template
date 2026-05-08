@@ -1,0 +1,66 @@
+# <Project> — Installation Plan
+
+_Template: copy to `projects/<name>/plan.md` and fill in. See `.claude/agents/planner.md` for rules._
+
+## What It Is
+
+One paragraph. What the project is, who made it, why it exists. End with "how it differs from <X>" if similar to an existing lab project.
+
+## Similar / related projects
+
+- Already in lab? `scripts/similarity-check.sh <name>` output:
+- Not in lab but adjacent: …
+
+## Tech stack & prerequisites
+
+| Tool | Required version | Install via | Notes |
+|---|---|---|---|
+| Node | v22+ | mise / brew | |
+| ... | | | |
+
+External services / API keys:
+
+| Service | Required? | Cost | Purpose | Destination (data-touched.md link) |
+|---|---|---|---|---|
+| OpenAI | yes | pay-go | embeddings | openai.com |
+
+## Playbook
+
+Either:
+- **Follow Playbook <A/B/C>** in `.harness/experience/playbooks.md`, with these deltas: …
+- Or: **New shape** — see `## Install` below, will back-write a Playbook after first install.
+
+## Install (numbered, copy-pasteable)
+
+```bash
+1. ...
+```
+
+## Configuration decisions (see `decisions.md` for the interactive list)
+
+Summary of what will be decided at install time.
+
+## Known gotchas
+
+- Project-specific
+- Relevant rows from `.harness/experience/failures.md`:
+
+## Success criteria (Smoke-test ladder)
+
+- [ ] Binary on PATH: `<cmd> --version`
+- [ ] `<cmd> doctor` passes (or warns predictably)
+- [ ] `<cmd> init` creates `<state-path>`
+- [ ] Tiny smoke test succeeds
+- [ ] Real workload succeeds
+
+## Lifecycle expectation
+
+- Trial only / candidate for daily use / already decided to adopt
+- Re-verify cadence after install: monthly (installed) / weekly (adopted)
+
+## Cost & exposure estimate
+
+- Disk: ~<MB>
+- Monthly $: API + compute
+- Privacy: see `data-touched.md`
+- Reversibility: see `## Uninstall` in the eventual `setup-log.md`

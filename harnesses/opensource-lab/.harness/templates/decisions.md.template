@@ -1,0 +1,35 @@
+# <Project> — Install-time Decisions
+
+_Template: copy to `projects/<name>/decisions.md` and fill in. Each decision persists; revisit per its trigger._
+
+## How to use this file
+
+1. Planner adds the decision blocks (not yet chosen).
+2. Executor fills in `User chose` at install time.
+3. Curator flags the decision for revisit when the `Revisit trigger` fires.
+4. Comparator reads these to explain "why this project, vs alternatives we discussed."
+
+---
+
+## Decision: <name>
+
+- **Options**: A, B, C
+- **Default recommendation**: A — because …
+- **Why it matters for daily use**: …
+- **User chose**: _(filled at install time)_
+- **Revisit trigger**: when the corpus exceeds 10k files / when API cost crosses $X/mo / yearly / never
+- **Reversibility**: easy (can switch anytime) / hard (data migration needed) / irreversible
+
+---
+
+## Decision: <name 2>
+
+(repeat)
+
+---
+
+## Deferred / skipped decisions
+
+List decisions we *consciously* punted on with the reason. Future-you needs to know these weren't overlooked.
+
+- Deferred: <thing> → reason: <why not now> → when to revisit: <trigger>

@@ -1,4 +1,0 @@
-task_id	status	agent	timestamp	notes
-auth-01	done	builder	2026-05-05T14:30	实现 users 表和注册 API
-auth-02	done	builder	2026-05-05T16:45	实现登录/登出 API 和 session 管理
-auth-03	done	qa	2026-05-06T10:15	第 1 轮 QA 通过，所有验收标准满足

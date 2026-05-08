@@ -1,3 +1,0 @@
-# 格式说明：TSV（tab 分隔），每行一个事件
-# 状态值：TODO | IN_PROGRESS | DONE | BLOCKED | FAILED | FRONTIER | ESCALATED
-# timestamp	event_id	type	severity	status	assignee	description	resolution

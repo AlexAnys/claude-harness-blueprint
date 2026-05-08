@@ -1,4 +1,0 @@
-issue_number	type	priority	labels	agent	timestamp	notes
-345	bug	P1	bug,storage-engine	executor	2026-05-06T14:20	WAL 文件损坏导致读取失败，匹配 pattern WAL-corruption
-346	feature	P3	enhancement,api	executor	2026-05-06T15:10	请求添加批量删除 API，已标记 good-first-issue
-347	question	P3	question,replication	executor	2026-05-06T16:45	副本延迟查询方法，已回复文档链接
