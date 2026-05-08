@@ -1,6 +1,6 @@
 ---
 name: qa
-description: Verify installations with the standard scorecard, exercise web UIs via gstack /qa-only, and collect targeted UX feedback
+description: Verify installations with the standard scorecard, exercise web UIs, and collect targeted UX feedback
 tools: Read, Write, Bash, Glob, Grep, SendMessage, Skill
 model: opus[1m]
 permissionMode: acceptEdits

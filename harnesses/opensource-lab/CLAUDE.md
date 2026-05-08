@@ -92,7 +92,7 @@ opensource-lab/
 
 - **Isolation**: every project gets its own folder. State dirs under `~/.<name>/` are recorded in `setup-log.md` → `State Locations` and respected at uninstall. Per-project `.envrc` + `.tool-versions` are the preferred isolation mechanism.
 - **Registry is sacred**: every install / lifecycle change updates `registry.md` + appends `progress.tsv`. The Stop hook warns if drift is detected.
-- **Secrets via bws**: plaintext in files / env never. Use `bws run --project-id <uuid> -- <cmd>`. See `.harness/secrets-map.md`.
+- **Secrets 管理**: 不在文件中明文存储 secrets。推荐 `bws`（Bitwarden Secrets Manager）：`bws run --project-id <uuid> -- <cmd>`。如果没有 bws，可以用项目级 `.env` 文件（加入 `.gitignore`）或系统 Keychain。无论哪种方式，在 `.harness/secrets-map.md` 中记录每个 secret 的用途和存放位置。
 - **QA is independent**: @qa has no Edit tool. If a fix is needed, it messages @executor with repro steps; it does not fix.
 - **UX feedback is mandatory**: every QA pass asks 2-3 action-triggering questions.
 - **Minimal config**: default to simplest working setup; add complexity only on user request.

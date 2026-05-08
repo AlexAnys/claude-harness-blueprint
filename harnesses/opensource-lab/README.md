@@ -1,6 +1,6 @@
 # Open Source Lab Harness
 
-A production-grade 6-agent Claude Code harness for discovering, installing, comparing, and maintaining open-source projects. Built through real-world usage across 5+ projects, refined through post-mortems and iterative hardening.
+A production-grade 7-agent Claude Code harness for discovering, installing, comparing, and maintaining open-source projects. Built through real-world usage across 5+ projects, refined through post-mortems and iterative hardening.
 
 ## Architecture
 
